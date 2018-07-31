@@ -13,7 +13,6 @@ export default class Main extends Component {
     async componentDidMount() {
         var pdate = new Date().toDateString();
 
-
         setInterval( () => {
           this.setState({
             ctime : new Date().toLocaleTimeString(),
@@ -21,9 +20,34 @@ export default class Main extends Component {
           })
         },1000);
 
-        let myArray = await AsyncStorage.getItem('myArray');
-        this.state.datas = JSON.parse(myArray);
+        let myArray = await AsyncStorage.getAllKeys();
+        var list = [];
 
+        for(var i = myArray.length-1; i >= 0 ; i--){
+          let obj = await AsyncStorage.multiGet(myArray);
+          let d = JSON.parse(obj[i][1]);
+          if(d.date === pdate){
+          this.state.datas.push(d);
+          list.push(d);
+          }
+      }
+      this.setState({datas: list});
+
+    }
+    async componentDidUpdate(){
+        var pdate = new Date().toDateString();
+        let myArray = await AsyncStorage.getAllKeys();
+        var list = [];
+
+        for(var i = 0; i< myArray.length-2; i++){
+          let obj = await AsyncStorage.multiGet(myArray);
+          let d = JSON.parse(obj[i][1]);
+          if(d.date === pdate){
+          this.state.datas.push(d);
+          list.push(d);
+          }
+      }
+      this.setState({datas: list});
     }
     fabPress(){
         this.setState({active:!this.state.active});

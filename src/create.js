@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Text, Image} from 'react-native';
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon} from 'native-base';
+import {Image, StyleSheet} from 'react-native';
+import { Container, Header, Title, View, Content, Button, Left, Right, Body, Icon, Text} from 'native-base';
 import FormFill from './formFill'
 export default class Create extends Component {
   
@@ -19,7 +19,10 @@ export default class Create extends Component {
           <Right />
         </Header>
         <Content>
-        <Image source={{uri: 'https://www.amansw.com.au/wp-content/uploads/2016/11/web-icons-careers-service_3.png'}} style={{height: 100, width: null}}/>
+            <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+                <Image source={require('../assets/logo.png')} style={{height: 50, width: 50, marginHorizontal:20}}/>
+                <Text style={styles.title}>ROOM BOOKING</Text>
+            </View>
 
           <FormFill />
         </Content>
@@ -27,3 +30,13 @@ export default class Create extends Component {
     );
   }
 }
+const styles = StyleSheet.create({
+    title:{
+        fontSize: 20,
+        color: 'grey',
+        fontWeight: 'bold',
+        letterSpacing: 3,
+        marginVertical: 5,
+        textDecorationLine: 'underline'
+    }
+})

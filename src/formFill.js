@@ -6,6 +6,7 @@ import DatePicker from 'react-native-datepicker';
 let currentId =0;
 var key;
 
+
 export default class FormFill extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +15,7 @@ export default class FormFill extends Component {
           start: '',
           name: '',
           reason: '',
+          date: '',
           isDateTimePickerVisible: false,
         };
       }
@@ -21,43 +23,46 @@ export default class FormFill extends Component {
         let cid = await AsyncStorage.getItem('current_id');
           cid = JSON.parse(cid);
           currentId = cid;
+          var date = new Date().toDateString();
+          this.setState({date});
       }
         
       getKey(){
           key = 'array'+currentId;
       }
       _storeData = async () => {
-          this.getKey();
-        var dat = new Date().toDateString();
-        const {end, start, name, reason} = this.state;
+        this.getKey();   
+        
+        const {end, start, name, reason, date} = this.state;
         let myArray = {
             start: start,
             end: end,
             name: name,
             reason: reason,
+            date: date,
         }
         AsyncStorage.setItem(key, JSON.stringify(myArray));
         currentId = currentId+ 1;
         AsyncStorage.setItem('current_id', JSON.stringify(currentId));
 
-        alert(name + ' saved booking '+ currentId);
+        alert('Success! Booked by: '+name+' from: '+start+ ' to: '+ end);
       }
-      _showData = async() =>{
-          let myArray = await AsyncStorage.getItem(key);
-          let d = JSON.parse(myArray);
-          alert(d);
-          console.log(d);
-      }
-      _getData = async() =>{
-          let myArray = await AsyncStorage.getAllKeys();
-          alert(myArray); 
-      }
+    //   _showData = async() =>{
+    //       let myArray = await AsyncStorage.getItem(key);
+    //       let d = JSON.parse(myArray);
+    //       alert(d);
+    //       console.log(d);
+    //   }
+    //   _getData = async() =>{
+    //       let myArray = await AsyncStorage.getAllKeys();
+    //       alert(myArray); 
+    //   }
      
   render() {
     return (
         <Content>
             <Form style={styles.forms}>
-                <Item floatingLabel>
+                <Item floatingLabel style={{marginBottom: 20}}>
                     <Label>Name</Label>
                     <Input 
                     onChangeText={name => this.setState({name})}
@@ -93,8 +98,8 @@ export default class FormFill extends Component {
                 />
 
                 <Button style={{marginVertical: 15}}info rounded large bordered block onPress={()=>{this._storeData()}} ><Text>BOOK</Text></Button>
-                <Button success rounded large bordered block onPress={()=>{this._showData()}} ><Text>show</Text></Button>
-                <Button primary rounded large bordered block onPress={()=>{this._getData()}} ><Text>get all</Text></Button>
+                {/* <Button success rounded large bordered block onPress={()=>{this._showData()}} ><Text>show</Text></Button>
+                <Button primary rounded large bordered block onPress={()=>{this._getData()}} ><Text>get all</Text></Button> */}
             </Form>
         </Content>
     );

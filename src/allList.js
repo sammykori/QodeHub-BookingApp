@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import {FlatList, AsyncStorage} from 'react-native';
 import {Content, ListItem, Left, Body, Right, Text, Header, Container, Button, Icon, Title } from 'native-base';
-import ajax from './ajax'
 export default class HomeTable extends Component {
     state= {
         datas: [],
     }
     async componentDidMount(){
         let myArray = await AsyncStorage.getAllKeys();
-          alert(myArray); 
           console.log(myArray)
           var list = [];
 
-        for(var i = 0; i< myArray.length-2; i++){
+        for(var i = myArray.length-1; i >= 0 ; i--){
             let obj = await AsyncStorage.multiGet(myArray);
             let d = JSON.parse(obj[i][1]);
             this.state.datas.push(d);
