@@ -3,6 +3,8 @@ import {Image, StyleSheet, AsyncStorage} from 'react-native';
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, View, Fab} from 'native-base';
 import HomeTable from './homeTable';
 
+
+var pdate = new Date().toDateString();
 export default class Main extends Component {
     state = {
         ctime: '',
@@ -11,7 +13,7 @@ export default class Main extends Component {
         active: 'true'
     };
     async componentDidMount() {
-        var pdate = new Date().toDateString();
+        
 
         setInterval( () => {
           this.setState({
@@ -34,21 +36,24 @@ export default class Main extends Component {
       this.setState({datas: list});
 
     }
-    async componentDidUpdate(){
-        var pdate = new Date().toDateString();
-        let myArray = await AsyncStorage.getAllKeys();
-        var list = [];
+    // async componentDidUpdate(prevState){
+    //     if (this.state.datas!== prevState.datas) {
+          
+    //         console.log("component has updated");
+    //         let myArray = await AsyncStorage.getAllKeys();
+    //         var list = [];
 
-        for(var i = 0; i< myArray.length-2; i++){
-          let obj = await AsyncStorage.multiGet(myArray);
-          let d = JSON.parse(obj[i][1]);
-          if(d.date === pdate){
-          this.state.datas.push(d);
-          list.push(d);
-          }
-      }
-      this.setState({datas: list});
-    }
+            
+    //         let obj = await AsyncStorage.multiGet(myArray);
+    //         let d = JSON.parse(obj[myArray.length-1][1]);
+    //         if(d.date === pdate){
+    //         this.state.datas.push(d);
+    //         list.push(d);
+            
+    //         }
+    //         console.log(this.state.datas);
+    //     } 
+    // }
     fabPress(){
         this.setState({active:!this.state.active});
         this.props.navigation.navigate('Create');
@@ -56,14 +61,14 @@ export default class Main extends Component {
   render() {
     return (
       <Container>
-        <Header>
+        <Header style = {{backgroundColor: "black"}}>
           <Left>
             <Button transparent onPress={()=>{this.props.navigation.navigate('AllList')}}>
               <Icon name='menu' />
             </Button>
           </Left>
           <Body>
-            <Title>Booking App</Title>
+            <Title>ROOM BOOKING</Title>
           </Body>
           <Right />
         </Header>
@@ -94,7 +99,7 @@ export default class Main extends Component {
           <Fab
             active={this.state.active}
             containerStyle={{ }}
-            style={{ backgroundColor: '#5067FF'}}
+            style={{ backgroundColor: 'black'}}
             position="bottomRight"
             onPress={() => {this.fabPress()}}>
             <Icon name="add" />

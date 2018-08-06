@@ -17,20 +17,19 @@ export default class HomeTable extends Component {
             list.push(d);
             
         }
-        console.log(list);
         this.setState({datas: list});
     }
   render() { 
     return (
         <Container>
-            <Header>
+            <Header style = {{backgroundColor: "black"}}>
                 <Left>
                     <Button transparent onPress={()=>{this.props.navigation.navigate('Main')}}>
                     <Icon name='arrow-back' />
                     </Button>
                 </Left>
                 <Body>
-                    <Title>Booking App</Title>
+                    <Title>ALL BOOKINGS</Title>
                 </Body>
                 <Right />
             </Header>

@@ -7,14 +7,14 @@ export default class Create extends Component {
   render() {
     return (
       <Container>
-        <Header>
+        <Header style = {{backgroundColor: "black"}}>
           <Left>
             <Button transparent onPress={()=>{this.props.navigation.navigate('Main')}}>
               <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
-            <Title>Booking App</Title>
+            <Title>MAKE A BOOKING</Title>
           </Body>
           <Right />
         </Header>
